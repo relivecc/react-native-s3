@@ -245,11 +245,7 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
         String propKey = iter.nextKey();
         String value = meta.getString(propKey);
 
-        if (propKey.startsWith("x-amz-meta-")) {
-          metaData.addUserMetadata(propKey, value);
-        } else {
-          metaData.setHeader(propKey, value);
-        }
+        metaData.setHeader(propKey, value);
       }
       task = transferUtility.upload(bucket, key, file, metaData);
     } else {

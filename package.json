@@ -1,6 +1,6 @@
 {
   "name": "react-native-s3",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "description": "A React Native wrapper for AWS S3 SDK",
   "main": "./src/index.js",
   "files": [
@@ -10,9 +10,7 @@
   ],
   "scripts": {
     "lint": "eslint src test example/*.js",
-    "test": "npm run lint && mocha",
-    "prepublish": "npm test && ./scripts/download-ios.sh 2.5.2 && rm -rf ./ios/RNS3.xcodeproj/xcuserdata ./ios/RNS3.xcodeproj/project.xcworkspace",
-    "postinstall": "./scripts/download-ios.sh 2.5.2 && rm -rf ./ios/RNS3.xcodeproj/xcuserdata ./ios/RNS3.xcodeproj/project.xcworkspace"
+    "test": "npm run lint && mocha"
   },
   "repository": {
     "type": "git",
@@ -26,6 +24,7 @@
     "transferutility"
   ],
   "author": "Jhen <developer@jhen.me>",
+  "homepage": "http://github.com/mybigday/react-native-s3",
   "license": "MIT",
   "eslintConfig": {
     "extends": "mybigday"

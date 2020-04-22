@@ -237,22 +237,26 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
     File file = new File(options.getString("file"));
     ReadableMap meta = options.getMap("meta");
     ObjectMetadata metaData = new ObjectMetadata();
+    
+    try{
+      TransferObserver task;
+      if (meta != null) {
+        ReadableMapKeySetIterator iter = meta.keySetIterator();
+        while (iter.hasNextKey()) {
+          String propKey = iter.nextKey();
+          String value = meta.getString(propKey);
 
-    TransferObserver task;
-    if (meta != null) {
-      ReadableMapKeySetIterator iter = meta.keySetIterator();
-      while (iter.hasNextKey()) {
-        String propKey = iter.nextKey();
-        String value = meta.getString(propKey);
-
-        metaData.setHeader(propKey, value);
+          metaData.setHeader(propKey, value);
+        }
+        task = transferUtility.upload(bucket, key, file, metaData);
+      } else {
+        task = transferUtility.upload(bucket, key, file);
       }
-      task = transferUtility.upload(bucket, key, file, metaData);
-    } else {
-      task = transferUtility.upload(bucket, key, file);
+      subscribe(task);
+      promise.resolve(convertTransferObserver(task));
+    } catch(Exception e) {
+      promise.reject("error", "Unable to upload file", e);
     }
-    subscribe(task);
-    promise.resolve(convertTransferObserver(task));
   }
 
   @ReactMethod
